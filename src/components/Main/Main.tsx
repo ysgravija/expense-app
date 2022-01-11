@@ -9,17 +9,19 @@ import { Category, Transaction } from '../../types/types';
 interface MainProps {
     transactions : Transaction[],
     categories : Category[],
+    balance : number, 
     onTransactionDelete : (transaction : Transaction) => void;
     onTransactionCreate : (categoryName : string, type : 'Income' | 'Expense', amount : number, date : Date) => void;
 }
 
-const Main = ({transactions, categories, onTransactionDelete, onTransactionCreate } : MainProps) => {
+const Main = ({transactions, categories, balance, onTransactionDelete, onTransactionCreate } : MainProps) => {
     const classes = useStyles();
+
     return (
         <Card className={classes.root}>
             <CardHeader title="Expense Tracker"/>
             <CardContent>
-                <Typography align="center" variant="h5">Total Balance RM0</Typography>
+                <Typography align="center" variant="h5">Total Balance RM {balance}</Typography>
                 <Typography variant="subtitle1" style={{ lineHeight: '1.5em', marginTop: '20px' }}>
                     {/* InfoCard */}
                     {/* Try saying: Add income for RM100 in Category Salary for Monday ... */}

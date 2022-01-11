@@ -42,7 +42,7 @@ const Form = ({categories, onTransactionCreate} : FormProps) => {
                     <Select value={formData.category} onChange={(e) => {
                         setFormData({...formData, category : String(e.target.value)});
                     }}>
-                        {categories.map((c) => <MenuItem key={c.name} value={c.name}>{c.name}</MenuItem>)}
+                        {categories.filter((c)=>c.type === formData.type).map((c) => <MenuItem key={c.name} value={c.name}>{c.name}</MenuItem>)}
                     </Select>
                 </FormControl>
             </Grid>
