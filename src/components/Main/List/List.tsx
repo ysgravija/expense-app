@@ -2,7 +2,7 @@ import React from 'react'
 import { List as MUIList, ListItem, ListItemAvatar, ListItemText, Avatar, ListItemSecondaryAction, IconButton, Slide } from '@material-ui/core';
 import { MoneyOff } from '@material-ui/icons';
 import useStyles from './styles';
-import { Transaction } from '../../../constants/categories';
+import { Transaction } from '../../../types/types';
 import DeleteButton from './DeleteButton';
 
 export interface ListProps {

@@ -4,7 +4,7 @@ import { Card, CardHeader, CardContent, Typography, Grid, Divider } from '@mater
 import useStyles from './styles';
 import Form from './Form/Form';
 import List from './List/List';
-import { Category, Transaction } from '../../constants/categories';
+import { Category, Transaction } from '../../types/types';
 
 interface MainProps {
     transactions : Transaction[],

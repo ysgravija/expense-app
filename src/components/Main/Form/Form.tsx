@@ -2,7 +2,8 @@ import React from 'react'
 import {TextField, Typography, Grid, Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 
 import useStyles from './styles';
-import { Category, Transaction } from '../../../constants/categories';
+import { Category, Transaction } from '../../../types/types';
+import formatDate from '../../../utils/formatDate';
 
 const initialState : Transaction = {
     id : '', category : '', amount : Number(''), type : 'Income', date : new Date(),
@@ -51,7 +52,7 @@ const Form = ({categories, onTransactionCreate} : FormProps) => {
                 )}}/>
             </Grid>
             <Grid item xs={6}>
-                <TextField type="date" label="Date" fullWidth value={formData.date} onChange={(e) => {
+                <TextField type="date" label="Date" fullWidth value={formatDate(formData.date)} onChange={(e) => {
                     setFormData({...formData, date :  new Date(e.target.value)}
                 )}}/>
             </Grid>

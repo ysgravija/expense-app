@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import { Details } from './components/Details/Details'
 import Main from './components/Main/Main'
 import useStyles from './styles';
-import { expenseCategories, incomeCategories, Transaction } from './constants/categories';
+import { expenseCategories, incomeCategories, Transaction } from './types/types';
 import { v4 as uuidv4 } from 'uuid';
 
 const App = () => {
