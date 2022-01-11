@@ -2,43 +2,41 @@ import React from 'react'
 import { Card, CardHeader, CardContent, Typography } from '@material-ui/core'
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement } from 'chart.js'
-import useTransactions from '../../useTransactions';
 
 import useStyles from './styles';
-
-// let numArray : number [];
-// const labels = [
-//     'January',
-//     'February',
-//     'March',
-//     'April',
-//     'May',
-//     'June',
-//   ];
-
-// const data = {
-//     labels: labels,
-//     datasets: [{
-//       label: 'My First dataset',
-//       backgroundColor: 'rgb(255, 99, 132)',
-//       borderColor: 'rgb(255, 99, 132)',
-//       data: [0, 10, 5, 2, 20, 30, 45],
-//     }]
-//   };
+import { Category, Transaction } from '../../constants/categories';
 
 Chart.register(ArcElement);
 
 export interface DetailsProps {
-    title : string
+    title : 'Income' | 'Expense',
+    transactions : Transaction[]
+    categories : Category[];
 }
 
-export const Details = (props : DetailsProps) => {
+export const Details = ({title, transactions, categories} : DetailsProps) => {
     const classes = useStyles();
-    const {total, chartData } = useTransactions(props.title);
-    
+    const {chartData, total} = React.useMemo( () => {
+        const categoryToAmount = (category : Category) => {
+            return transactions.reduce((sum, transaction) => sum += transaction.category === category.name ? transaction.amount : 0, 0);       
+        };
+        
+        const aggregatedCategories = categories.map(category => ({ name: category.name, color : category.color, amount : categoryToAmount(category) })).filter(s => s.amount > 0);
+        const total = aggregatedCategories.reduce((sum, item) => sum += item.amount, 0);
+        const chartData = {
+            datasets : [{
+                data: aggregatedCategories.map(s => s.amount),
+                backgroundColor: aggregatedCategories.map(s => s.color),
+            }],
+            labels: aggregatedCategories.map(s => s.name)
+        };
+        console.log( {chartData});
+        return {chartData, total};
+    }, [transactions, categories]);
+
     return (
-        <Card className={props.title === 'Income' ? classes.income : classes.expense}>
-            <CardHeader title={props.title}/>
+        <Card className={title === 'Income'? classes.income : classes.expense}>
+            <CardHeader title={title}/>
             <CardContent>
                 <Typography variant="h5">RM{total}</Typography>
                 <Doughnut data={chartData} />

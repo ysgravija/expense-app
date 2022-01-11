@@ -4,8 +4,16 @@ import { Card, CardHeader, CardContent, Typography, Grid, Divider } from '@mater
 import useStyles from './styles';
 import Form from './Form/Form';
 import List from './List/List';
+import { Category, Transaction } from '../../constants/categories';
 
-const Main = () => {
+interface MainProps {
+    transactions : Transaction[],
+    categories : Category[],
+    onTransactionDelete : (transaction : Transaction) => void;
+    onTransactionCreate : (categoryName : string, type : 'Income' | 'Expense', amount : number, date : Date) => void;
+}
+
+const Main = ({transactions, categories, onTransactionDelete, onTransactionCreate } : MainProps) => {
     const classes = useStyles();
     return (
         <Card className={classes.root}>
@@ -17,12 +25,12 @@ const Main = () => {
                     {/* Try saying: Add income for RM100 in Category Salary for Monday ... */}
                 </Typography>
                 <Divider/>
-                <Form />
+                <Form categories={categories} onTransactionCreate={onTransactionCreate} />
             </CardContent>
             <CardContent className={classes.cardContent}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <List />
+                        <List transactions={transactions} onTransactionDelete={onTransactionDelete} />
                     </Grid>
                 </Grid>
             </CardContent>

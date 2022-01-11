@@ -1,28 +1,21 @@
 import React from 'react'
 import { List as MUIList, ListItem, ListItemAvatar, ListItemText, Avatar, ListItemSecondaryAction, IconButton, Slide } from '@material-ui/core';
-import { Delete, MoneyOff } from '@material-ui/icons';
-
-import { ExpenseTrackerContext } from '../../../context/context';
+import { MoneyOff } from '@material-ui/icons';
 import useStyles from './styles';
-import { Transaction, TransactionAction } from '../../../context/contextReducer';
+import { Transaction } from '../../../constants/categories';
+import DeleteButton from './DeleteButton';
 
-const List = () => {
+export interface ListProps {
+    transactions : Transaction[];
+    onTransactionDelete : (transaction : Transaction) => void;
+};
+
+const List = ({transactions, onTransactionDelete} : ListProps ) => {
     const classes = useStyles();
-    const {state, dispatch} = React.useContext(ExpenseTrackerContext);
-        // const deleteTransaction = (transaction : Transaction) => {
-    //     dispatch( {type: TransactionAction.Delete, payload: transaction });
-    // };
     
-    const deleteTransaction = (transaction : Transaction) => {
-        dispatch({
-            type: TransactionAction.Delete,
-            payload: { ...transaction }
-        });
-    }
-
     return (
         <MUIList dense={false} className={classes.list}>
-            {state.transactions.map((transaction) => (
+            {transactions.map((transaction) => (
                 <Slide direction="down" in mountOnEnter unmountOnExit key={transaction.id}>
                     <ListItem>
                         <ListItemAvatar>
@@ -32,8 +25,8 @@ const List = () => {
                         </ListItemAvatar>
                         <ListItemText primary={transaction.category} secondary={`RM${transaction.amount} - ${transaction.date}`}/>
                         <ListItemSecondaryAction>
-                            <IconButton aria-label='delete' edge='end' onClick={()=> deleteTransaction(transaction)}>
-                                <Delete />
+                            <IconButton aria-label='delete' edge='end'> 
+                                <DeleteButton onClick={ ()=> onTransactionDelete(transaction) } />
                             </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
