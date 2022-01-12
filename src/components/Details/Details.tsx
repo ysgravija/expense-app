@@ -45,3 +45,4 @@ export const Details = ({title, transactions, categories} : DetailsProps) => {
         </Card>
     )
 }
+export default Details;

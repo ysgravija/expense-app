@@ -46,7 +46,7 @@ const App = () => {
                 </Grid>
                 <Grid item xs={12} sm={3}>
                     <Main balance={balance} transactions={transactions} onTransactionDelete={deleteTransaction} 
-                    categories={[...categories]} onTransactionCreate={addTransactions} />
+                        categories={[...categories]} onTransactionCreate={addTransactions} />
                 </Grid>
                 <Grid item xs={12} sm={4}>
                     <Details title="Expense" transactions={transactions} categories={expenseCategories} />

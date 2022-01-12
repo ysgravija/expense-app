@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "types": ["node", "jest"],
     "lib": [
       "dom",
       "dom.iterable",
@@ -24,8 +25,13 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
+    "outDir": "./dist"
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "internals"
   ]
 }
